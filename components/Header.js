@@ -1,12 +1,11 @@
-import { tituloApp } from "../labels";
 import { View, Image, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function Header() {
+export default function Header({ titulo }) {
   return (
     <View style={styles.container}>
       <Image source={require("../assets/logo.png")} style={styles.logo} />
-      <Text style={styles.titulo}>{tituloApp}</Text>
+      <Text style={styles.titulo}>{titulo}</Text>
       <Ionicons name="person-circle" size={36} color="#1a1a1a" />
     </View>
   );

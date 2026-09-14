@@ -1,26 +1,30 @@
-import { useState } from "react";
 import { View, TextInput, Pressable, Text, StyleSheet } from "react-native";
-import { botaoAdicionar, placeholderCompromisso } from "../labels";
 
-export default function CompromissoInput({ onAdicionar }) {
-  const [text, setText] = useState("");
+//a IA sugeriu juntar as duas props de label em uma prop só chamada labels, mas isso me parece um pouco confuso, pois, por qualquer motivo, a pessoa sempre
+//terá que voltar ao app.js para saber quais as labels que estão sendo passadas. Fica aqui a minha dúvida de melhores práticas, utilizar labels e
+//"adivinhar" quais são as propriedades dentro de labels ou desconstruir em placeholder e botaoAdicionar?
 
-  function handleAdicionar() {
-    if (text.trim() === "") return;
-    onAdicionar(text);
-    setText("");
-  }
-
+export default function CompromissoInput({
+  value,
+  onChangeText,
+  onAdd,
+  labels,
+}) {
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder={placeholderCompromisso}
-        value={text}
-        onChangeText={setText}
+        placeholder={labels.placeholder}
+        value={value}
+        onChangeText={onChangeText}
       ></TextInput>
-      <Pressable style={styles.botao} onPress={handleAdicionar}>
-        <Text style={styles.textoBotao}>{botaoAdicionar}</Text>
+      <Pressable
+        key={item.id}
+        style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
+        android_ripple={{ color: "#ddd" }}
+        onLongPress={() => onDelete(item.id)}
+      >
+        <Text style={styles.itemTexto}>{item.text}</Text>
       </Pressable>
     </View>
   );
@@ -33,6 +37,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     gap: 8,
+  },
+  itemPressed: {
+    opacity: 0.6,
   },
   input: {
     flex: 7,
