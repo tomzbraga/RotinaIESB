@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 export default function Header() {
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/logo.png")} />
+      <Image source={require("../assets/logo.png")} style={styles.logo} />
       <Text style={styles.titulo}>{tituloApp}</Text>
       <Ionicons name="person-circle" size={36} color="#1a1a1a" />
     </View>

@@ -6,7 +6,7 @@ export default function CompromissoInput({ onAdicionar }) {
   const [text, setText] = useState("");
 
   function handleAdicionar() {
-    if (text.trim === "") return;
+    if (text.trim() === "") return;
     onAdicionar(text);
     setText("");
   }
