@@ -19,12 +19,11 @@ export default function CompromissoInput({
         onChangeText={onChangeText}
       ></TextInput>
       <Pressable
-        key={item.id}
-        style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
+        style={({ pressed }) => [styles.botao, pressed && styles.itemPressed]}
         android_ripple={{ color: "#ddd" }}
-        onLongPress={() => onDelete(item.id)}
+        onPress={onAdd}
       >
-        <Text style={styles.itemTexto}>{item.text}</Text>
+        <Text style={styles.textoBotao}>{labels.botao}</Text>
       </Pressable>
     </View>
   );
