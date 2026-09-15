@@ -1,29 +1,38 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
+import { View, Text, FlatList, Pressable, StyleSheet } from "react-native";
 
 //aqui a junção dos titulos na props "labels" foi para seguir o mesmo padrão feito no componente CompromissoInput, porém ainda acho
 //um trabalho desnecessário.
 
-export default function CompromissoList({ itens, onDelete, labels }) {
+export default function CompromissoList({ itens, onDelete, onToggle, labels }) {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>{labels.tituloLista}</Text>
-      {itens.length === 0 ? (
-        <View style={styles.vazioContainer}>
-          <Text style={styles.vazio}>{labels.listaVazia}</Text>
-        </View>
-      ) : (
-        <ScrollView style={styles.scroll}>
-          {itens.map((item) => (
-            <Pressable
-              key={item.id}
-              style={styles.item}
-              onLongPress={() => onDelete(item.id)}
+      <FlatList
+        style={styles.lista}
+        data={itens}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={itens.length === 0 && styles.vazioContainer}
+        renderItem={({ item }) => (
+          <Pressable
+            style={({ pressed }) => [
+              styles.item,
+              pressed && styles.itemPressed,
+            ]}
+            android_ripple={{ color: "#eee" }}
+            onPress={() => onToggle(item.id)}
+            onLongPress={() => onDelete(item.id)}
+          >
+            <Text
+              style={[styles.itemTexto, item.concluido && styles.itemConcluido]}
             >
-              <Text style={styles.itemTexto}>{item.text}</Text>
-            </Pressable>
-          ))}
-        </ScrollView>
-      )}
+              {item.text}
+            </Text>
+          </Pressable>
+        )}
+        ListEmptyComponent={
+          <Text style={styles.vazio}>{labels.listaVazia}</Text>
+        }
+      />
     </View>
   );
 }
@@ -39,7 +48,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 8,
   },
-  scroll: {
+  lista: {
     flex: 1,
   },
   vazioContainer: {
@@ -57,7 +66,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
+  itemPressed: {
+    opacity: 0.6,
+  },
   itemTexto: {
     fontSize: 15,
+  },
+  itemConcluido: {
+    textDecorationLine: "line-through",
+    color: "#999",
   },
 });
